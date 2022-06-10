@@ -2,7 +2,10 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <string>
+#include <map>
+#include <functional>
 using std::cout;
 using std::endl;
 
@@ -275,38 +278,186 @@ using std::endl;
 //}
 
 
-class Test
+//class Test
+//{
+//public:
+//	Test()
+//	{
+//		cout << "无参构造" << endl;
+//	}
+//	Test(const Test&)
+//	{
+//		cout << "拷贝构造" << endl;
+//	}
+//	Test(Test&&)
+//	{
+//		cout << "移动构造" << endl;
+//	}
+//	~Test()
+//	{
+//		cout << "析构" << endl;
+//	}
+//};
+//
+//
+//int main()
+//{
+//	Test test;//左值
+//	cout << endl;
+//	std::vector<Test>v1;
+//	cout << "push_back：";
+//	v1.push_back(test); cout << endl;
+//	v1.push_back(test); cout << endl;
+//	v1.push_back(test); cout << endl;
+//	v1.push_back(test); cout << endl;
+//	v1.push_back(test); cout << endl;
+//	return 0;
+//}
+
+//struct  cmp
+//{
+//	bool operator()(int a,int b)
+//	{
+//		return a < b;
+//	}
+//};
+//int main()
+//{
+//	int arr[] = { 4,1,3,5,2,7,6,8,9,10 };
+//	std::sort(arr, arr + sizeof(arr) / sizeof(arr[0]), cmp());
+//	for (auto e : arr)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	int arr[] = { 4,1,3,5,2,7,6,8,9,10 };
+//	std::sort(arr, arr + sizeof(arr) / sizeof(arr[0]),
+//		[](int a, int b) {return a < b; }
+//	);
+//	for (auto e : arr)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//	return 0;
+//}
+
+//int a = 1;
+//int main()
+//{
+//	int b = 2;
+//	int c = 3;
+//
+//	[] {};
+//	[]() {};
+//	[]() ->int {return 0; };
+//	[]() mutable->int {return 0; };
+//
+//	/*auto f = [=, &c] {c = 4, cout << b << " " << c << endl; return 0; };
+//	f(); */
+//	return 0;
+//}
+
+//int main()
+//{
+//	auto f=[] {cout << "hello" << endl; };
+//	f();
+//	cout << typeid(f).name() << endl;
+//	return 0;
+//}
+
+//int a = 1;
+//int main()
+//{
+//	[] {};
+//	[]() {};
+//	[]() ->int {return 0; };
+//	[]() mutable->int {return 0; };	
+//	return 0;
+//}
+
+
+//int Sum(double a, double b)
+//{
+//	return a + b;
+//}
+//struct Sum2
+//{
+//	int operator()(double a, double b)
+//	{
+//		return a + b;
+//	}
+//};
+//
+//int main()
+//{
+//	using namespace std::placeholders;
+//	auto func_sum2 = std::bind(Sum, 5, _2);
+//	cout << func_sum2(1, 2) << endl;
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	//std::function<int(double, double)>func_sum =
+//	//	std::bind(Sum,std::placeholders::_1,std::placeholders::_2);	
+//	//cout << func_sum(1, 2) << endl;
+//	//
+//	//using namespace std::placeholders;
+//	//std::function<int(double, double)>func_sum1 =
+//	//	std::bind(Sum, _1,_2);
+//	//cout << func_sum1(1, 2) << endl;
+//
+//	using namespace std::placeholders;
+//	auto func_sum2 = std::bind(Sum, 5, _2);	
+//	cout << func_sum2(1, 2) << endl;
+//
+//	//std::function<int(double, double)>func_sum2 = Sum2();
+//	//cout << func_sum2(1, 2) << endl;
+//
+//	//std::function<int(double, double)>func_sum3 =
+//	//	[](double a, double b)->int {return a + b; };
+//	//cout << func_sum3(1, 2) << endl;
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	std::map<std::string, std::function<int(int, int)>>m
+//	{ {"+",[](int a,int b)->int {return a + b; }},
+//	  {"-",[](int a,int b)->int {return a - b; }},
+//	  {"*",[](int a,int b)->int {return a * b; }},
+//	  {"/",[](int a,int b)->int {return a / b; }}
+//	};
+//	cout << m["+"](1, 2) << endl;
+//	cout << m["-"](1, 2) << endl;
+//	cout << m["*"](1, 2) << endl;
+//	cout << m["/"](1, 2) << endl;
+//	return 0;
+//}
+
+class Plus
 {
 public:
-	Test()
+	int Sum(int a, int b)
 	{
-		cout << "无参构造" << endl;
-	}
-	Test(const Test&)
-	{
-		cout << "拷贝构造" << endl;
-	}
-	Test(Test&&)
-	{
-		cout << "移动构造" << endl;
-	}
-	~Test()
-	{
-		cout << "析构" << endl;
+		return a + b;
 	}
 };
 
-
 int main()
 {
-	Test test;//左值
-	cout << endl;
-	std::vector<Test>v1;
-	cout << "push_back：";
-	v1.push_back(test);
-	v1.push_back(test);
+	using namespace std::placeholders;
+	Plus plus;
+	auto Plus_Sum = std::bind(&Plus::Sum, &plus, _1, _2);
+	cout << Plus_Sum(1, 2) << endl;
 	return 0;
 }
-
-
-
